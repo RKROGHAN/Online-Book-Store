@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Online Bookstore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>📚 BookStore</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="cart.html" class="nav-link">
+                        Cart <span id="cart-count" class="cart-badge">0</span>
+                    </a>
+                    <a href="orders.html" class="nav-link">Orders</a>
+                    <a href="account.html" class="nav-link active">Account</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Account Section -->
+    <main class="main-content">
+        <div class="container">
+            <h2 class="page-title">My Account</h2>
+            <div class="account-container">
+                <div class="account-section">
+                    <h3>Account Information</h3>
+                    <div style="background: #e8f4f8; padding: 1.5rem; border-radius: 5px; margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #667eea;">Your Points Balance</h4>
+                        <div style="font-size: 2rem; font-weight: 700; color: #667eea;" id="account-points">0</div>
+                        <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">1 point = $0.01 discount. Use redemption codes to earn more points!</p>
+                    </div>
+                    <form id="account-form" class="account-form">
+                        <div class="form-group">
+                            <label for="account-name">Full Name</label>
+                            <input type="text" id="account-name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="account-email">Email</label>
+                            <input type="email" id="account-email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="account-phone">Phone Number</label>
+                            <input type="tel" id="account-phone" name="phone">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                <div class="account-section">
+                    <h3>Shipping Address</h3>
+                    <form id="address-form" class="account-form">
+                        <div class="form-group">
+                            <label for="account-address">Street Address</label>
+                            <input type="text" id="account-address" name="address">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="account-city">City</label>
+                                <input type="text" id="account-city" name="city">
+                            </div>
+                            <div class="form-group">
+                                <label for="account-state">State</label>
+                                <input type="text" id="account-state" name="state">
+                            </div>
+                            <div class="form-group">
+                                <label for="account-zip">ZIP Code</label>
+                                <input type="text" id="account-zip" name="zip">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="account-country">Country</label>
+                            <input type="text" id="account-country" name="country" value="United States">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Address</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Your trusted online bookstore with a wide selection of books across all genres.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="orders.html">Order History</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: support@bookstore.com</p>
+                    <p>Phone: 1-800-BOOKS</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BookStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load account info on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadBooks();
+            loadAccountInfo();
+            updateCartCount();
+            
+            // Save account info
+            document.getElementById('account-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveAccountInfoForm();
+            });
+            
+            // Save address info
+            document.getElementById('address-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveAddressInfo();
+            });
+        });
+    </script>
+</body>
+</html>
+

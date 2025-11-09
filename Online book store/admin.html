@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Online Bookstore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>📚 BookStore</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="admin.html" class="nav-link active">Admin Panel</a>
+                    <a href="account.html" class="nav-link">Account</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Panel -->
+    <main class="main-content">
+        <div class="container">
+            <h2 class="page-title">Admin Panel</h2>
+            
+            <div id="admin-content">
+                <!-- Admin content will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Your trusted online bookstore with a wide selection of books across all genres.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="orders.html">Order History</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: support@bookstore.com</p>
+                    <p>Phone: 1-800-BOOKS</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BookStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check if user is admin
+            if (!isAdmin()) {
+                alert('Access denied. Admin privileges required.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            await loadBooks();
+            loadAdminPanel();
+            updateCartCount();
+            updateUserMenu();
+        });
+        
+        function loadAdminPanel() {
+            const orders = getOrders();
+            const users = getUsers();
+            const books = allBooks;
+            const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+            const totalOrders = orders.length;
+            const totalUsers = users.length;
+            const totalBooks = books.length;
+            
+            document.getElementById('admin-content').innerHTML = `
+                <div class="admin-panel">
+                    <h3>Dashboard Statistics</h3>
+                    <div class="admin-stats">
+                        <div class="stat-card">
+                            <h4>Total Revenue</h4>
+                            <div class="stat-value">$${totalRevenue.toFixed(2)}</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Orders</h4>
+                            <div class="stat-value">${totalOrders}</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Users</h4>
+                            <div class="stat-value">${totalUsers}</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Books</h4>
+                            <div class="stat-value">${totalBooks}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-panel">
+                    <h3>Recent Orders</h3>
+                    <div class="orders-container">
+                        ${orders.slice(0, 10).map(order => {
+                            const orderDate = new Date(order.date);
+                            return `
+                                <div class="order-card">
+                                    <div class="order-header">
+                                        <div>
+                                            <div class="order-id">Order #${order.id}</div>
+                                            <div class="order-date">${orderDate.toLocaleDateString()}</div>
+                                        </div>
+                                        <div class="order-status status-${order.status}">${order.status}</div>
+                                    </div>
+                                    <div class="order-summary-section">
+                                        <div>Customer: ${order.shipping.fullName}</div>
+                                        <div class="order-total">Total: $${order.total.toFixed(2)}</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                
+                <div class="admin-panel">
+                    <h3>Book Inventory</h3>
+                    <div class="books-grid">
+                        ${books.map(book => `
+                            <div class="book-card">
+                                <img src="${book.image}" alt="${book.title}" class="book-image" onerror="this.src='https://via.placeholder.com/300x400?text=Book+Cover'">
+                                <div class="book-info">
+                                    <h3 class="book-title">${book.title}</h3>
+                                    <p class="book-author">by ${book.author}</p>
+                                    <div class="book-price">$${book.price.toFixed(2)}</div>
+                                    <div style="margin-top: 0.5rem;">
+                                        <strong>Stock:</strong> ${book.stock}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
+

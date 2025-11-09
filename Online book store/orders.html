@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Online Bookstore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>📚 BookStore</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="cart.html" class="nav-link">
+                        Cart <span id="cart-count" class="cart-badge">0</span>
+                    </a>
+                    <a href="orders.html" class="nav-link active">Orders</a>
+                    <a href="account.html" class="nav-link">Account</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Orders Section -->
+    <main class="main-content">
+        <div class="container">
+            <h2 class="page-title">Order History</h2>
+            <div id="orders-container" class="orders-container">
+                <!-- Orders will be loaded here -->
+            </div>
+            <div id="no-orders" class="no-orders" style="display: none;">
+                <p>You haven't placed any orders yet.</p>
+                <a href="index.html" class="btn btn-primary">Start Shopping</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Your trusted online bookstore with a wide selection of books across all genres.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="orders.html">Order History</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: support@bookstore.com</p>
+                    <p>Phone: 1-800-BOOKS</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BookStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load orders on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadBooks();
+            loadOrders();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
+

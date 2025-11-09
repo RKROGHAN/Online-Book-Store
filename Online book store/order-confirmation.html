@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Online Bookstore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>📚 BookStore</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="cart.html" class="nav-link">
+                        Cart <span id="cart-count" class="cart-badge">0</span>
+                    </a>
+                    <a href="orders.html" class="nav-link">Orders</a>
+                    <a href="account.html" class="nav-link">Account</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Order Confirmation Section -->
+    <main class="main-content">
+        <div class="container">
+            <div class="order-confirmation-container" style="background: white; border-radius: 10px; padding: 3rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; max-width: 600px; margin: 2rem auto;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">✓</div>
+                <h2 style="color: #667eea; margin-bottom: 1rem;">Order Confirmed!</h2>
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">Thank you for your purchase. Your order has been placed successfully.</p>
+                <div id="order-info" style="text-align: left; background: #f8f9fa; padding: 1.5rem; border-radius: 5px; margin-bottom: 2rem;">
+                    <!-- Order info will be loaded here -->
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="orders.html" class="btn btn-primary">View Orders</a>
+                    <a href="index.html" class="btn btn-secondary">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Your trusted online bookstore with a wide selection of books across all genres.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="orders.html">Order History</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: support@bookstore.com</p>
+                    <p>Phone: 1-800-BOOKS</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BookStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            
+            if (orderId) {
+                const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                const order = orders.find(o => o.id === orderId);
+                
+                if (order) {
+                    const orderDate = new Date(order.date);
+                    document.getElementById('order-info').innerHTML = `
+                        <p><strong>Order ID:</strong> #${order.id}</p>
+                        <p><strong>Order Date:</strong> ${orderDate.toLocaleDateString()} ${orderDate.toLocaleTimeString()}</p>
+                        <p><strong>Total Amount:</strong> $${order.total.toFixed(2)}</p>
+                        <p><strong>Status:</strong> ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p>
+                    `;
+                } else {
+                    document.getElementById('order-info').innerHTML = '<p>Order not found.</p>';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
